@@ -281,6 +281,10 @@ imgTarget.forEach((img) => imgObserver.observe(img));
 ///////////////////////////////////////////////////
 //Bulding a slider component Part1
 
+//All functions are inside the functions sliderAccumulator
+
+const sliderAccumulator = function(){
+
 const slides = document.querySelectorAll(".slide");
 const btnLeft = document.querySelector(".slider__btn--left");
 const btnRight = document.querySelector(".slider__btn--right");
@@ -301,6 +305,16 @@ const createDots = function(){
   });
 };
 createDots()
+
+const activateDots = function(slide){
+//select all the dots
+document.querySelectorAll('.dots__dot')
+.forEach(dot=> dot.classList.remove('dots__dot--active'))
+
+document.querySelector(`.dots__dot[data-slide='${slide}']`)
+.classList.add('dots__dot--active')
+}
+activateDots(0)
 
 const gotToSlide = function (slide) {
   slides.forEach(
@@ -324,6 +338,7 @@ const nextSlide = function () {
   //here we want the 1st slide to be at -100%,
   //2nd slide at 0%, 3rd slide at 100%, and 4th slide at 200%
   gotToSlide(currentSlide);
+  activateDots(currentSlide)
 };
 
 const prevSlide = function () {
@@ -333,17 +348,31 @@ const prevSlide = function () {
     currentSlide--;
   }
   gotToSlide(currentSlide);
+  activateDots(currentSlide)
 };
 btnRight.addEventListener("click", nextSlide);
 btnLeft.addEventListener("click", prevSlide);
-document.addEventListener('keydown', function(e){
 
+document.addEventListener('keydown', function(e){
   if(e.key === 'ArrowLeft') prevSlide();
-  
+
+  //short circuit of if(e.key === "ArrowRight")nextSlide() is
   e.key === 'ArrowRight' && nextSlide();
-  
 })
 
+dotsContainer.addEventListener('click', function(e){
+  if(e.target.classList.contains('dots__dot')){
+    //the following commented code is the same as the one on line
+    //number 352 using destructuring because of the word slide is same
+  // const slide = e.target.dataset.slide
+    const {slide}=e.target.dataset
+    gotToSlide(slide)
+    activateDots(slide)
+  }
+})
+
+};
+sliderAccumulator()
 // //left and right dots
 // document.addEventListener('keydown', function(e){
 //   console.log(e);
