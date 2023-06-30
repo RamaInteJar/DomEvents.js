@@ -597,3 +597,23 @@ sliderAccumulator()
 
 // console.log(h1.previousSibling);
 // console.log(h1.nextSibling);
+
+//DOM CONTENT LOADED: IT IS FIRED AS SOON AS HTML IS 
+//COMPLETETLY PARSED(I.E COMPLETELY DOWNLOADED INTO THE DOM TREE)
+
+document.addEventListener('DOMContentLoaded', function(e){
+  console.log("HTML parsed and DOM tree built", e);
+})
+
+//LOAD EVENT
+window.addEventListener('load', function(e){
+  console.log('Page fully loaded', e)
+})
+
+//beforeUnload: just before the user leaves the website
+
+// window.addEventListener('beforeunload', function(e){
+//   e.preventDefault();
+//   console.log(e)
+//   e.returnValue = ''
+// })
